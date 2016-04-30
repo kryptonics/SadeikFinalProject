@@ -104,7 +104,6 @@ vector<char> Encryption::antiFaro(vector<char> scrambled,int reps){
 vector<char> Encryption::sixPile(vector<char> input,int reps){
     int repCount=0;
     vector<char> pool=input;
-    int sizer=input.size();
     while(repCount!=reps){
         int pileCount=1;
         vector<char> p1;
@@ -175,103 +174,51 @@ vector<char> Encryption::antiSixPile(vector<char> input,int reps){
     int sizer=pool.size();
     while(repCount!=reps){
         int determinant=(sizer%6);
-        int a1=0;
-        int a2=0;
-        int a3=0;
-        int a4=0;
-        int a5=0;
-        int a6=0;
-        queue<char> p1;
-        queue<char> p2;
-        queue<char> p3;
-        queue<char> p4;
-        queue<char> p5;
-        queue<char> p6;
+        int a[6] = {0,0,0,0,0,0};
+        queue<char> p[6] = {queue<char>(),queue<char>(),queue<char>(),queue<char>(),queue<char>(),queue<char>()};
         vector<char> deShuffle;
-        if(determinant==1){
-            a1=1;
-        }else if(determinant==2){
-            a1=1;
-            a2=1;
-        }else if(determinant==3){
-            a1=1;
-            a2=1;
-            a3=1;
-        }else if(determinant==4){
-            a1=1;
-            a2=1;
-            a3=1;
-            a4=1;
-        }else if(determinant==5){
-            a1=1;
-            a2=1;
-            a3=1;
-            a4=1;
-            a5=1;
+        for(int i=0; i<determinant && i<6; i++)
+          a[i] = 1;
+        for(int i=((sizer/6)+a[0])-1;i>=0;i--){
+            p[0].push(pool[i]);
         }
-        for(int i=((sizer/6)+a1)-1;i>=0;i--){
-            p1.push(pool[i]);
+        for(int i=(((sizer/6)+a[0])+((sizer/6)+a[4]))-1;i>=((sizer/6)+a[0])-1;i--){
+            p[4].push(pool[i]);
         }
-        for(int i=(((sizer/6)+a1)+((sizer/6)+a5))-1;i>=((sizer/6)+a1)-1;i--){
-            p5.push(pool[i]);
+        for(int i=(((sizer/6)+a[0])+((sizer/6)+a[4])+((sizer/6)+a[2]))-1;i>=(((sizer/6)+a[0])+((sizer/6)+a[4]))-1;i--){
+            p[2].push(pool[i]);
         }
-        for(int i=(((sizer/6)+a1)+((sizer/6)+a5)+((sizer/6)+a3))-1;i>=(((sizer/6)+a1)+((sizer/6)+a5))-1;i--){
-            p3.push(pool[i]);
+        for(int i=(((sizer/6)+a[0])+((sizer/6)+a[4])+((sizer/6)+a[2])+((sizer/6)+a[5]))-1;i>=(((sizer/6)+a[0])+((sizer/6)+a[4])+((sizer/6)+a[2]))-1;i--){
+            p[5].push(pool[i]);
         }
-        for(int i=(((sizer/6)+a1)+((sizer/6)+a5)+((sizer/6)+a3)+((sizer/6)+a6))-1;i>=(((sizer/6)+a1)+((sizer/6)+a5)+((sizer/6)+a3))-1;i--){
-            p6.push(pool[i]);
+        for(int i=(((sizer/6)+a[0])+((sizer/6)+a[4])+((sizer/6)+a[2])+((sizer/6)+a[5])+((sizer/6)+a[1]))-1;i>=(((sizer/6)+a[0])+((sizer/6)+a[4])+((sizer/6)+a[2])+((sizer/6)+a[5]))-1;i--){
+            p[1].push(pool[i]);
         }
-        for(int i=(((sizer/6)+a1)+((sizer/6)+a5)+((sizer/6)+a3)+((sizer/6)+a6)+((sizer/6)+a2))-1;i>=(((sizer/6)+a1)+((sizer/6)+a5)+((sizer/6)+a3)+((sizer/6)+a6))-1;i--){
-            p2.push(pool[i]);
+        for(int i=(((sizer/6)+a[0])+((sizer/6)+a[4])+((sizer/6)+a[2])+((sizer/6)+a[5])+((sizer/6)+a[1])+((sizer/6)+a[3]))-1;i>=(((sizer/6)+a[0])+((sizer/6)+a[4])+((sizer/6)+a[2])+((sizer/6)+a[5])+((sizer/6)+a[1]))-1;i--){
+            p[3].push(pool[i]);
         }
-        for(int i=(((sizer/6)+a1)+((sizer/6)+a5)+((sizer/6)+a3)+((sizer/6)+a6)+((sizer/6)+a2)+((sizer/6)+a4))-1;i>=(((sizer/6)+a1)+((sizer/6)+a5)+((sizer/6)+a3)+((sizer/6)+a6)+((sizer/6)+a2))-1;i--){
-            p4.push(pool[i]);
-        }
-        int unDeal=determinant;
-        int counter=0;
+        int unDeal=determinant-1;
         stack<char> deckBox;
         while(deckBox.size()<pool.size()){
-            if(unDeal==6){
-                deckBox.push(p6.front());
-                counter++;
-                p6.pop();
-                unDeal--;
-            }else if(unDeal==5){
-                deckBox.push(p5.front());
-                counter++;
-                p5.pop();
-                unDeal--;
-            }else if(unDeal==4){
-                deckBox.push(p4.front());
-                counter++;
-                p4.pop();
-                unDeal--;
-            }else if(unDeal==3){
-                deckBox.push(p3.front());
-                counter++;
-                p3.pop();
-                unDeal--;
-            }else if(unDeal==2){
-                deckBox.push(p2.front());
-                counter++;
-                p2.pop();
-                unDeal--;
-            }else if(unDeal==1){
-                deckBox.push(p1.front());
-                counter++;
-                p1.pop();
-                unDeal=6;
-            }
+            moveToDeck(p[unDeal], deckBox);
+            unDeal--;
+            if(unDeal <= 0)
+              unDeal = 5;
         }
         for(int i=0;i<sizer;i++){
-        char loader=(deckBox.top());
-        deShuffle.push_back(loader);
-        deckBox.pop();
+            char loader=(deckBox.top());
+            deShuffle.push_back(loader);
+            deckBox.pop();
         }
         pool=deShuffle;
         repCount++;
     }
     return pool;
+}
+
+void Encryption::moveToDeck (queue<char> &qu, stack<char> &deckBox) {
+  deckBox.push(qu.front());
+  qu.pop();
 }
 
 void Encryption::constructKey(int entry){
@@ -283,5 +230,3 @@ void Encryption::printKey(){
     }
     cout<<endl;
 }
-
-
