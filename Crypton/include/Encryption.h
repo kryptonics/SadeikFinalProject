@@ -1,6 +1,8 @@
 #ifndef ENCRYPTION_H
 #define ENCRYPTION_H
 #include <vector>
+#include <queue>
+#include <stack>
 #include <iostream>
 #include <string>
 
@@ -21,6 +23,7 @@ class Encryption
         vector<char> sixPile(vector<char>,int);
         vector<char> antiSixPile(vector<char>,int);
         void printKey();
+        void moveToDeck (queue<char>&, stack<char>&);
         void constructKey(int entry);
     protected:
     private:
