@@ -164,7 +164,6 @@ int main(){
                     vector<string> gibberishatorx=makeCipher(ee2,cipher2);
                     vector<string> done2=converter(ss2,gibberishatorx,cipher2);
                     printResults(done2, fileName2);
-                    cout << "Done with this" << endl;
                 }else{
                     cout<<"File failed to open."<<endl;
                 }
