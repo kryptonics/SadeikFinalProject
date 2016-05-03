@@ -236,26 +236,26 @@ int main(){
     }
 
 vector<string> makeCipher(vector<char> e2,string cipher){
-            vector<string> gib;
-            int entropyCount=1;
-            for(int i=0;i<92;i++){
-                string codon={e2[entropyCount],e2[entropyCount+1],e2[entropyCount+2]};
-                if(!gib.empty()){
-                        bool unique=true;
-                    for(int j=0;j<gib.size();j++){
-                        if (codon==gib[j]){
-                            unique=false;
-                        }
-                    }
-                    if(unique==true){
-                        gib.push_back(codon);
-                    }
-                }else{
-                    gib.push_back(codon);
+    vector<string> gib;
+    int entropyCount=1;
+    for(int i=0;i<92;i++){
+        string codon={e2[entropyCount],e2[entropyCount+1],e2[entropyCount+2]};
+        if(!gib.empty()){
+                bool unique=true;
+            for(int j=0;j<gib.size();j++){
+                if (codon==gib[j]){
+                    unique=false;
                 }
-                entropyCount=entropyCount+3;
             }
-            return gib;
+            if(unique==true){
+                gib.push_back(codon);
+            }
+        }else{
+            gib.push_back(codon);
+        }
+        entropyCount=entropyCount+3;
+    }
+    return gib;
 }
 
 int randomGen(int minimum,int maximum){
@@ -270,8 +270,8 @@ vector<string> converter(vector<char> s2,vector<string> gibberishator,string cip
                 done.push_back(gibberishator[j]);
             }
         }
-           }
-           return done;
+    }
+    return done;
 }
 
 vector<char> backConverter(vector<char> crypted,vector<string> gibberish,string cipher){
